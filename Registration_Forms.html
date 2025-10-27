@@ -1,0 +1,135 @@
+ <!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Registration Form</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+    }
+
+    form {
+      height: 90vh;
+      text-align: center;
+      width: 20%;
+      background-color: rgba(76, 68, 68, 0.2);
+      padding: 3%;
+      border-radius: 5%;
+    }
+
+    body {
+      background-color: rgb(98, 54, 139);
+      overflow: hidden;
+      width: 100vw;
+      height: 100vh;
+      
+      background: url(Background_For_Login-Form.jpg);
+      background-attachment: fixed;
+      background-repeat: no-repeat;
+      background-position: center;
+      background-size: cover;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    fieldset {
+      padding: 5%;
+      margin: 1%;
+    }
+
+    input {
+      height: 4vh;
+      width: 85%;
+    }
+
+    legend {
+      color: white;
+    }
+
+    button {
+      height: 5vh;
+      width: 30%;
+    }
+
+    ::placeholder {
+      padding: 10px;
+    }
+   
+  </style>
+</head>
+<body>
+  <form id="registerForm">
+    <fieldset>
+      <legend style="font-style: italic;"><b>REGISTRATION FORM</b></legend>
+
+      <fieldset>
+        <legend style="font-style: italic;"><b>Email</b></legend>
+        <input type="email" id="email" placeholder="Email" required />
+      </fieldset>
+
+      <fieldset>
+        <legend><b>Password</b></legend>
+        <input type="password" id="password" placeholder="Set password" required /><br /><br />
+        <input type="password" id="confirmPassword" placeholder="Confirm password" required />
+      </fieldset>
+
+      <fieldset>
+        <legend><b>Name</b></legend>
+        <input type="text" id="name" placeholder="Name" required />
+      </fieldset>
+
+      <fieldset>
+        <legend><b>Date Of Birth</b></legend>
+        <input type="text" id="dob" placeholder="Date Of Birth" required />
+      </fieldset>
+
+      <fieldset>
+        <legend><b>Gender</b></legend>
+        <input type="text" id="gender" placeholder="Gender" required />
+      </fieldset><br />
+
+    
+      <button type="submit">Submit</button>
+      <button type="reset">Cancel</button>
+    </fieldset>
+  </form>
+
+  <script>
+    document.getElementById("registerForm").addEventListener("submit", function (e) {
+      e.preventDefault();
+
+      const email = document.getElementById("email").value;
+      const password = document.getElementById("password").value;
+      const confirmPassword = document.getElementById("confirmPassword").value;
+      const name = document.getElementById("name").value;
+      const dob = document.getElementById("dob").value;
+      const gender = document.getElementById("gender").value;
+
+      if (password !== confirmPassword) {
+        alert("Passwords do not match.");
+        return;
+      }
+
+      const userData = {
+        email,
+        password,
+        name,
+        dob,
+        gender
+      };
+
+      localStorage.setItem("registeredUser", JSON.stringify(userData));
+      alert("Registration successful!");
+
+      window.location.href = "Student_Sign-in_Form.html";
+    });
+  </script>
+</body>
+</html> 
+
+
+
+ 

@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Parent Login</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-image: url('Background_For_Login-Form.jpg');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      opacity: 0.7;
+      z-index: -1;
+    }
+
+    body {
+      overflow: hidden;
+      margin-left: 2%;
+      height: 100vh;
+      margin-top: 5%;
+      align-items: center;
+      justify-content: center;
+      font-family: Arial, sans-serif;
+    }
+
+    form {
+      
+      border: 2px solid rgb(52, 132, 223);
+      width: 50%;
+      max-width: 500px;
+      padding: 40px;
+      text-align: center;
+      color: rgb(52, 132, 223);
+      border-radius: 10px;
+    }
+
+    form h2 {
+      margin-bottom: 30px;
+      font-size: 2rem;
+    }
+
+    input {
+      width: 80%;
+      height: 40px;
+      margin-bottom: 15px;
+      border: 2px solid rgb(52, 132, 223);
+      border-radius: 5px;
+      padding-left: 10px;
+      font-size: 1rem;
+    }
+
+    ::placeholder {
+      color: black;
+      opacity: 0.7;
+    }
+
+    button {
+      width: 80%;
+      height: 40px;
+      background-color: rgb(52, 132, 223);
+      border: none;
+      border-radius: 5px;
+      color: white;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    button:hover {
+      background-color: rgb(32, 112, 203);
+    }
+
+    .captcha-label {
+      font-weight: bold;
+      font-size: 1.1rem;
+      margin-bottom: 5px;
+      display: block;
+    }
+  </style>
+</head>
+<body>
+  <form id="loginForm">
+    <i class="fa-solid fa-building-columns"style="font-size: 2rem;"></i>
+    <h2>Management</h2>
+    <input type="email" id="email" placeholder="Enter your email" required />
+    <input type="password" id="password" placeholder="Enter Password" required />
+    
+    <label class="captcha-label" id="captchaLabel"></label>
+    <input type="text" id="captchaInput" placeholder="Enter CAPTCHA" required />
+
+    <input type="text" id="verification" placeholder="Verification Code" required />
+    <button type="submit">Sign In</button>
+  </form>
+
+  <script>
+    const users = [
+      { email: "user@gmail.com", password: "pass123", verification: "ABC123" },
+      { email: "user1@gmail.com", password: "pass456", verification: "XYZ789" }
+    ];
+
+    const captchaLabel = document.getElementById("captchaLabel");
+    const captchaInput = document.getElementById("captchaInput");
+    const form = document.getElementById("loginForm");
+
+    function generateCaptcha() {
+      const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+      let captcha = "";
+      for (let i = 0; i < 6; i++) {
+        captcha += chars.charAt(Math.floor(Math.random() * chars.length));
+      }
+      return captcha;
+    }
+
+    let generatedCaptcha = generateCaptcha();
+    captchaLabel.textContent = `CAPTCHA: ${generatedCaptcha}`;
+
+    form.addEventListener("submit", function (e) {
+      e.preventDefault();
+
+      const email = document.getElementById("email").value.trim();
+      const password = document.getElementById("password").value.trim();
+      const captcha = captchaInput.value.trim();
+      const verification = document.getElementById("verification").value.trim();
+
+      if (captcha !== generatedCaptcha) {
+        alert("❌ CAPTCHA does not match. Try again.");
+        generatedCaptcha = generateCaptcha();
+        captchaLabel.textContent = `CAPTCHA: ${generatedCaptcha}`;
+        captchaInput.value = "";
+        return;
+      }
+
+      const validUser = users.find(
+        (user) =>
+          user.email === email &&
+          user.password === password &&
+          user.verification === verification
+      );
+
+      if (validUser) {
+        alert("✅ Login successful! Redirecting...");
+        
+       
+        window.location.href = "Output.html";
+      } else {
+        alert("❌ Invalid credentials or verification code.");
+      }
+    });
+  </script>
+</body>
+</html>
